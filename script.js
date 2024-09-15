@@ -1,8 +1,9 @@
 import { API_KEY } from "./config.js";
 
 document.getElementById('searchBtn').addEventListener('click', function () {
-    const city = document.getElementById('city').value;
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`;
+    const city = document.getElementById('city');
+    const cityName= city.value;
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=metric`;
 
     fetch(apiUrl)
         .then(response => response.json())
@@ -17,8 +18,9 @@ document.getElementById('searchBtn').addEventListener('click', function () {
                 `;
                 document.getElementById('weatherInfo').innerHTML = weatherInfo;
             } else {
-                document.getElementById('weatherInfo').innerHTML = `<p>City not found. Please try again.</p>`;
+                document.getElementById('weatherInfo').innerHTML = `<p>Can't find city named <strong>${cityName}</strong>. Please try again.</p>`;
             }
+            city.value="";
         })
         .catch(error => {
             document.getElementById('weatherInfo').innerHTML = `<p>Unable to fetch weather data. Please try again later.</p>`;
